@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Vinilos</title>
+    <style>
+        :root {
+            --bg-dark: #0d0f26;
+            --bg-card: #181a26;
+            --border-card: rgba(255, 255, 255, 0.05);
+            --neon-pink: #ff3366;
+            --neon-orange: #a0a5c1;
+            --text-light: #ffffff;
+            --text-muted: #a0a5c1;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            background-attachment: fixed;
+        }
+
+        .container {
+            flex: 1 0 auto;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .catalog-title {
+            margin: 0 0 12px;
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .gradient-line {
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-pink), #ff7a00);
+            margin: 0 auto 40px auto;
+            border-radius: 2px;
+        }
+
+        .cart-toggle-btn {
+            position: fixed;
+            top: 95px;
+            right: 25px;
+            background: var(--neon-pink);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: none;
+            z-index: 900;
+            transition: transform 0.2s;
+        }
+
+        .cart-toggle-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .vinyl-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .vinyl-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-cover {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: #101220;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-style: italic;
+            font-size: 14px;
+            position: relative;
+            border-bottom: 1px solid var(--border-card);
+        }
+
+        .vinyl-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @media (max-width: 850px) {
+            .products-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 560px) {
+            .products-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        .vinyl-format-badge {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: rgba(0, 0, 0, 0.75);
+            border: 1px solid var(--neon-orange);
+            color: var(--neon-orange);
+            padding: 3px 8px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .vinyl-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .artist-name {
+            color: var(--neon-orange);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .album-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+        }
+
+        .release-year {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
+
+        .price-tag {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--neon-pink);
+            margin-bottom: 20px;
+            margin-top: auto;
+        }
+
+        .btn-add-cart {
+            background: var(--neon-pink);
+            border: none;
+            color: var(--text-light);
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .btn-add-cart:hover {
+            background: #e62254;
+            color: white;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 6, 15, 0.9);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cart-container {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            width: 95%;
+            max-width: 650px;
+            max-height: 90vh;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 26px;
+            color: var(--text-muted);
+            cursor: pointer;
+        }
+
+        .cart-close:hover {
+            color: var(--neon-pink);
+        }
+
+        .cart-title {
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-card);
+            padding-bottom: 10px;
+        }
+
+        .cart-items-list {
+            overflow-y: auto;
+            max-height: 200px;
+            margin-bottom: 20px;
+            text-align: left;
+            padding-right: 5px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-item-title {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .cart-item-price {
+            color: var(--neon-orange);
+            font-size: 13px;
+        }
+
+        .btn-remove-item {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-remove-item:hover {
+            color: var(--neon-pink);
+        }
+
+        .cart-empty-msg {
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .checkout-form {
+            text-align: left;
+            border-top: 1px solid var(--border-card);
+            padding-top: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-card);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--neon-pink);
+        }
+
+        .account-summary {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid var(--border-card);
+        }
+
+        .total-label {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .total-amount {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--neon-pink);
+        }
+
+        .btn-buy-now {
+            width: 100%;
+            background: var(--neon-pink);
+            border: none;
+            color: white;
+            padding: 14px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: none;
+        }
+
+        .btn-buy-now:hover {
+            filter: brightness(1.1);
+        }
+
+        .site-footer {
+            margin-top: 0;
+            padding: 24px 20px;
+            background: rgba(10, 12, 30, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            color: #a0a5c1;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .site-footer p + p {
+            margin-top: 6px;
+        }
+
+        .site-footer strong {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .site-footer {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="cart-toggle-btn" onclick="toggleCart(true)">
+        🛒 Carrito (<span id="cartCount">0</span>)
+    </button>
+
+    <div class="container">
+        <h1 class="catalog-title">Catálogo de Vinilos</h1>
+        <div class="gradient-line"></div>
+
+        <div class="products-grid">
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <img src="../IMAGENES/anri.jpg" alt="Portada del álbum Timely!! de Anri">
+                    <div class="vinyl-format-badge">Edición Vinilo 12"</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Anri</div>
+                    <h3 class="album-title">Timely!!</h3>
+                    <div class="release-year">Año Original: 1983</div>
+                    <div class="price-tag">$39.99 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Anri - Timely!!', 39.99)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <img src="../IMAGENES/ride.jpg" alt="Portada del álbum Ride On Time de Tatsuro Yamashita">
+                    <div class="vinyl-format-badge">Edición Vinilo 12"</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Tatsuro Yamashita</div>
+                    <h3 class="album-title">Ride On Time</h3>
+                    <div class="release-year">Año Original: 1980</div>
+                    <div class="price-tag">$46.00 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Tatsuro Yamashita - Ride On Time', 46.00)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <img src="../IMAGENES/var.jpg" alt="Portada del álbum Variety de Mariya Takeuchi">
+                    <div class="vinyl-format-badge">Edición Vinilo 12"</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Mariya Takeuchi</div>
+                    <h3 class="album-title">Variety</h3>
+                    <div class="release-year">Año Original: 1984</div>
+                    <div class="price-tag">$45.00 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Mariya Takeuchi - Variety', 45.00)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <img src="../IMAGENES/plas.jpg" alt="Portada del sencillo Plastic Love de Mariya Takeuchi">
+                    <div class="vinyl-format-badge">Vinilo 7"</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Mariya Takeuchi</div>
+                    <h3 class="album-title">Plastic Love</h3>
+                    <div class="release-year">Sencillo original: 1984</div>
+                    <div class="price-tag">$19.99 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Mariya Takeuchi - Plastic Love', 19.99)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <img src="../IMAGENES/suns.jpg" alt="Portada del álbum Sunshower de Taeko Onuki">
+                    <div class="vinyl-format-badge">LP Vinilo</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Taeko Onuki</div>
+                    <h3 class="album-title">Sunshower</h3>
+                    <div class="release-year">Año Original: 1977</div>
+                    <div class="price-tag">$42.00 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Taeko Onuki - Sunshower', 42.00)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <img src="../IMAGENES/alon.jpg" alt="Portada del álbum A Long Vacation de Eiichi Ohtaki">
+                    <div class="vinyl-format-badge">LP Vinilo</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Eiichi Ohtaki</div>
+                    <h3 class="album-title">A Long Vacation</h3>
+                    <div class="release-year">Año Original: 1981</div>
+                    <div class="price-tag">$44.00 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Eiichi Ohtaki - A Long Vacation', 44.00)">Añadir al Carrito</button>
+                </div>
+            </div>
+
+            <div class="vinyl-card">
+                <div class="vinyl-cover">
+                    <span>[ Arte de Tapa del Álbum ]</span>
+                    <div class="vinyl-format-badge">Edición Vinilo 12"</div>
+                </div>
+                <div class="vinyl-content">
+                    <div class="artist-name">Miki Matsubara</div>
+                    <h3 class="album-title">Pocket Park (Incl. Stay With Me)</h3>
+                    <div class="release-year">Año Original: 1980</div>
+                    <div class="price-tag">$48.50 USD</div>
+                    <button class="btn-add-cart" onclick="addToCart('Miki Matsubara - Pocket Park', 48.50)">Añadir al Carrito</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay">
+        <div class="cart-container">
+            <span class="cart-close" onclick="toggleCart(false)">&times;</span>
+            <h3 class="cart-title">Tu Carrito de Vinilos</h3>
+
+            <div class="cart-items-list" id="cartItemsContainer">
+                <div class="cart-empty-msg">Tu carrito está vacío. Agrega vinilos de la colección nocturna.</div>
+            </div>
+
+            <div class="checkout-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="buyerName">Nombre Completo</label>
+                        <input type="text" id="buyerName" placeholder="Ej. Carlos Martínez">
+                    </div>
+                    <div class="form-group">
+                        <label for="buyerEmail">Correo Electrónico</label>
+                        <input type="email" id="buyerEmail" placeholder="carlos@example.com">
+                    </div>
+                </div>
+                <div class="form-group" style="margin-bottom: 12px;">
+                    <label for="buyerAddress">Dirección de Envío postal</label>
+                    <input type="text" id="buyerAddress" placeholder="Calle, Avenida, Ciudad y Código Postal">
+                </div>
+            </div>
+
+            <div class="account-summary">
+                <span class="total-label">Cuenta total a pagar:</span>
+                <span class="total-amount" id="cartTotalText">$0.00 USD</span>
+            </div>
+
+            <button class="btn-buy-now" onclick="processCheckout()">Proceder con la Compra del Vinilo</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p><strong>&copy; 2026 Ecos de Tokyo. Todos los derechos reservados.</strong></p>
+        <p>Licencia de uso: todos los derechos reservados sobre el contenido original de este sitio. No se permite su reproducción, distribución o modificación sin autorización previa por escrito.</p>
+        <p>Los nombres, imágenes, portadas y obras de terceros pertenecen a sus respectivos titulares. Su inclusión es únicamente informativa y no implica titularidad ni autorización de reutilización.</p>
+    </footer>
+
+    <script>
+        let cart = [];
+
+        function toggleCart(show) {
+            const overlay = document.getElementById('cartOverlay');
+            if (show) {
+                overlay.classList.add('active');
+                renderCart();
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+
+        function addToCart(title, price) {
+            cart.push({ title: title, price: price });
+            document.getElementById('cartCount').innerText = cart.length;
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            document.getElementById('cartCount').innerText = cart.length;
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalText = document.getElementById('cartTotalText');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<div class="cart-empty-msg">Tu carrito está vacío. Agrega vinilos de la colección nocturna.</div>';
+                totalText.innerText = '$0.00 USD';
+                return;
+            }
+
+            container.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <div class="cart-item-info">
+                        <span class="cart-item-title">${item.title}</span>
+                        <span class="cart-item-price">$${item.price.toFixed(2)} USD</span>
+                    </div>
+                    <button class="btn-remove-item" onclick="removeFromCart(${index})">✕ Quitar</button>
+                `;
+                container.appendChild(itemDiv);
+            });
+
+            totalText.innerText = `$${total.toFixed(2)} USD`;
+        }
+
+        function processCheckout() {
+            if (cart.length === 0) {
+                alert("❌ El carrito está vacío. Agrega al menos un disco de vinilo antes de realizar la compra.");
+                return;
+            }
+
+            const name = document.getElementById('buyerName').value.trim();
+            const email = document.getElementById('buyerEmail').value.trim();
+            const address = document.getElementById('buyerAddress').value.trim();
+
+            if (!name || !email || !address) {
+                alert("⚠️ Por favor, rellena todos los campos del formulario para calcular la orden y procesar el envío de tus vinilos.");
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => total += item.price);
+
+            alert(`✨ ¡Compra procesada de forma exitosa, ${name}! \n\nTu cuenta total a pagar es de $${total.toFixed(2)} USD por los discos en formato físico. Te enviaremos el comprobante y el número de seguimiento a: ${email}. \n\n¡Gracias por comprar en Ecos de Tokyo!`);
+            
+            cart = [];
+            document.getElementById('cartCount').innerText = '0';
+            document.getElementById('buyerName').value = '';
+            document.getElementById('buyerEmail').value = '';
+            document.getElementById('buyerAddress').value = '';
+            toggleCart(false);
+        }
+    </script>
+</body>
+</html>

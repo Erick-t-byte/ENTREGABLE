@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Cuenta</title>
+    <style>
+        /* Reseteo básico y tipografía */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background-color: #111;
+        }
+
+        /* Contenedor del Video de Fondo */
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        /* Capa oscura para que el texto resalte */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Contenedor del Formulario (Efecto Glassmorphism) */
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            border: 1px rgba(255, 255, 255, 0.2) solid;
+            color: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        /* Grupos del formulario */
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #e0e0e0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #00b50c;
+            box-shadow: 0 0 8px rgba(0, 173, 181, 0.5);
+        }
+
+        /* Mensajes de Error */
+        .error-msg {
+            color: #ff4d4d;
+            font-size: 12px;
+            margin-top: 5px;
+            display: block;
+            min-height: 16px;
+        }
+
+        /* Botón de Registro */
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #00b524;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.1s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #008f95;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Mensaje de Confirmación Exitoso */
+        #mensaje-confirmacion {
+            background: rgba(46, 204, 113, 0.2);
+            border: 1px solid #2ecc71;
+            color: #2ecc71;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .oculto {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Video de fondo (Reemplaza la URL en 'src' por tu archivo) -->
+    <video class="video-background" autoplay loop muted playsinline>
+        <source src="../IMAGENES/matrix.mp4" type="video/mp4">
+        Tu navegador no soporta videos de fondo.
+    </video>
+
+    <!-- Capa oscura -->
+    <div class="overlay"></div>
+
+    <!-- Música de fondo oculta (Sin el atributo 'controls') -->
+    <audio id="musica-fondo" src="../IMAGENES/Arm.mp3" loop autoplay></audio>
+
+    <!-- Contenedor del Formulario -->
+    <div class="form-container">
+        <h2>Crear Cuenta</h2>
+        <div id="mensaje-confirmacion" class="oculto"></div>
+ 
+        <form id="formulario-registro" action="#" method="POST" novalidate>
+           
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" name="nombre" required minlength="3" placeholder="Ej: Juan Pérez">
+                <span class="error-msg" id="error-nombre"></span>
+            </div>
+ 
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required placeholder="ejemplo@correo.com">
+                <span class="error-msg" id="error-correo"></span>
+            </div>
+ 
+            <div class="form-group">
+                <label for="password">Contraseña (Mínimo 6 caracteres):</label>
+                <input type="password" id="password" name="password" required minlength="6" placeholder="••••••">
+                <span class="error-msg" id="error-password"></span>
+            </div>
+ 
+            <button type="submit">Registrarse</button>
+        </form>
+    </div>
+ 
+<script>
+    document.getElementById('formulario-registro').addEventListener('submit', function(event) {
+        event.preventDefault();
+ 
+        const nombre = document.getElementById('nombre');
+        const correo = document.getElementById('correo');
+        const password = document.getElementById('password');
+        const mensajeConfirmacion = document.getElementById('mensaje-confirmacion');
+ 
+        document.getElementById('error-nombre').textContent = '';
+        document.getElementById('error-correo').textContent = '';
+        document.getElementById('error-password').textContent = '';
+        mensajeConfirmacion.classList.add('oculto');
+ 
+        let formularioValido = true;
+ 
+        if (!nombre.checkValidity()) {
+            document.getElementById('error-nombre').textContent = 'El nombre es obligatorio y debe tener al menos 3 letras.';
+            formularioValido = false;
+        }
+ 
+        if (!correo.checkValidity()) {
+            document.getElementById('error-correo').textContent = 'Por favor, ingresa un correo electrónico válido.';
+            formularioValido = false;
+        }
+ 
+        if (!password.checkValidity()) {
+            document.getElementById('error-password').textContent = 'La contraseña debe tener una longitud mínima de 6 caracteres.';
+            formularioValido = false;
+        }
+ 
+        if (formularioValido) {
+            mensajeConfirmacion.textContent = `¡Registro exitoso! Bienvenido/a, ${nombre.value}.`;
+            mensajeConfirmacion.classList.remove('oculto');
+            this.reset();
+        }
+    });
+
+    // Forzar la reproducción al mínimo movimiento para saltar el bloqueo del navegador
+    function iniciarMusicaOculta() {
+        const audio = document.getElementById('musica-fondo');
+        audio.play().catch(error => {
+            console.log("Esperando una acción directa del usuario para activar el audio.");
+        });
+    }
+
+    // Se ejecuta al hacer clic, mover el mouse o hacer scroll por primera vez
+    ['click', 'mousemove', 'touchstart', 'scroll'].forEach(evt => {
+        window.addEventListener(evt, iniciarMusicaOculta, { once: true });
+    });
+</script>
+</body>
+</html>

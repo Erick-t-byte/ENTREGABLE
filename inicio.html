@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecos de Tokyo</title>
+    <style>
+        /* Estilos específicos para la funcionalidad del Modal sin interferir con el carrusel */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 9999; 
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #1a1a2e; 
+            color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+            border: 1px solid #333;
+            font-family: sans-serif;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .modal-close:hover { color: #fff; }
+        .btn-ver-mas {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 24px;
+            background-color: #ff3366; 
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-ver-mas:hover { background-color: #e02454; }
+        .card { cursor: pointer; }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-container input {
+            flex: 1 1 300px;
+            min-width: 0;
+        }
+
+        .search-container button {
+            padding: 10px 18px;
+            border: 0;
+            border-radius: 4px;
+            background: #ff3366;
+            color: #ffffff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background: #e02454;
+        }
+
+        #artist-search-status {
+            flex-basis: 100%;
+            min-height: 1.2em;
+            color: #a0a5c1;
+            font-size: 0.9rem;
+        }
+
+        .site-footer {
+            margin-top: 0;
+            padding: 24px 20px;
+            background: rgba(10, 12, 30, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            color: #a0a5c1;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .site-footer p + p {
+            margin-top: 6px;
+        }
+
+        .site-footer strong {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .search-container input {
+                flex-basis: 100%;
+            }
+
+            .site-footer {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body class="home-page">
+
+    <header class="main-header">
+        <div class="hero-section">
+            <h1>ECOS DE TOKYO</h1>
+            <p>Encuentra toda la info de artistas y discografías del J-Pop.</p>
+            <form class="search-container" id="artist-search-form" role="search">
+                <input
+                    id="artist-search"
+                    type="search"
+                    list="artist-suggestions"
+                    placeholder="Buscar artista..."
+                    aria-label="Buscar artista"
+                    aria-describedby="artist-search-status"
+                    required>
+                <datalist id="artist-suggestions">
+                    <option value="Tatsuro Yamashita"></option>
+                    <option value="Miki Matsubara"></option>
+                    <option value="Mariya Takeuchi"></option>
+                    <option value="Taeko Onuki"></option>
+                    <option value="Haruomi Hosono"></option>
+                    <option value="Anri"></option>
+                    <option value="Eiko Kawashima"></option>
+                </datalist>
+                <button type="submit">Buscar</button>
+                <span id="artist-search-status" role="status" aria-live="polite"></span>
+            </form>
+        </div>
+    </header>
+
+    <main class="content-container">
+
+        <!-- SECCIÓN ARTISTAS -->
+        <div id="artistas-seccion" class="carousel-container">
+            <h2 class="carousel-title">ARTISTAS MÁS ESCUCHADOS</h2>
+            <div class="carousel-window">
+                <div class="carousel-track artists-animation">
+                    <!-- Los 6 Artistas Originales -->
+                    <div class="card" onclick="abrirModal('modal-tatsuro')"><img src="../IMAGENES/TY.jpeg" alt="Tatsuro Yamashita"><h3>Tatsuro Yamashita</h3></div>
+                    <div class="card" onclick="abrirModal('modal-eiko')"><img src="../IMAGENES/AR.jpg" alt="Eiko Kawashima"><h3>Eiko Kawashima</h3></div>
+                    <div class="card" onclick="abrirModal('modal-miki')"><img src="../IMAGENES/MI.jpg" alt="Miki Matsubara"><h3>Miki Matsubara</h3></div>
+                    <div class="card" onclick="abrirModal('modal-mariya')"><img src="../IMAGENES/MA.jpg" alt="Mariya Takeuchi"><h3>Mariya Takeuchi</h3></div>
+                    <div class="card" onclick="abrirModal('modal-taeko')"><img src="../IMAGENES/onuki.webp" alt="Taeko Onuki"><h3>Taeko Onuki</h3></div>
+                    <div class="card" onclick="abrirModal('modal-haruomi')"><img src="../IMAGENES/hosono.jpg" alt="Haruomi Hosono"><h3>Haruomi Hosono</h3></div>
+
+                    <!-- Duplicados idénticos para el bucle infinito -->
+                    <div class="card" onclick="abrirModal('modal-tatsuro')"><img src="../IMAGENES/TY.jpeg" alt="Tatsuro Yamashita"><h3>Tatsuro Yamashita</h3></div>
+                    <div class="card" onclick="abrirModal('modal-anri')"><img src="../IMAGENES/AR.jpg" alt="Anri"><h3>Anri</h3></div>
+                    <div class="card" onclick="abrirModal('modal-miki')"><img src="../IMAGENES/MI.jpg" alt="Miki Matsubara"><h3>Miki Matsubara</h3></div>
+                    <div class="card" onclick="abrirModal('modal-mariya')"><img src="../IMAGENES/MA.jpg" alt="Mariya Takeuchi"><h3>Mariya Takeuchi</h3></div>
+                    <div class="card" onclick="abrirModal('modal-taeko')"><img src="../IMAGENES/onuki.webp" alt="Taeko Onuki"><h3>Taeko Onuki</h3></div>
+                    <div class="card" onclick="abrirModal('modal-haruomi')"><img src="../IMAGENES/hosono.jpg" alt="Haruomi Hosono"><h3>Haruomi Hosono</h3></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divider-line"></div>
+
+        <!-- SECCIÓN ÁLBUMES -->
+        <div id="discografias-seccion" class="carousel-container">
+            <h2 class="carousel-title">Álbumes más visitados</h2>
+            <div class="carousel-window">
+                <div class="carousel-track albums-animation">
+                    <!-- Los 6 Álbumes Originales -->
+                    <div class="card album-card" onclick="abrirModal('modal-timely')"><img src="../IMAGENES/anri.jpg" alt="Timely!! - Anri"><h3>Timely!! - Anri</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-ride')"><img src="../IMAGENES/ride.jpg" alt="Ride On Time - Tatsuro Yamashita"><h3>Ride On Time</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-variety')"><img src="../IMAGENES/var.jpg" alt="Variety - Mariya Takeuchi"><h3>Variety</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-plastic')"><img src="../IMAGENES/plas.jpg" alt="Plastic Love - Single"><h3>Plastic Love</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-sunshower')"><img src="../IMAGENES/suns.jpg" alt="Sunshower - Taeko Onuki"><h3>Sunshower</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-vacation')"><img src="../IMAGENES/alon.jpg" alt="A Long Vacation - Eiichi Ohtaki"><h3>A Long Vacation</h3></div>
+
+                    <!-- Duplicados idénticos para el bucle infinito -->
+                    <div class="card album-card" onclick="abrirModal('modal-timely')"><img src="../IMAGENES/anri.jpg" alt="Timely!! - Anri"><h3>Timely!! - Anri</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-ride')"><img src="../IMAGENES/ride.jpg" alt="Ride On Time - Tatsuro Yamashita"><h3>Ride On Time</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-variety')"><img src="../IMAGENES/var.jpg" alt="Variety - Mariya Takeuchi"><h3>Variety</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-plastic')"><img src="../IMAGENES/plas.jpg" alt="Plastic Love - Single"><h3>Plastic Love</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-sunshower')"><img src="../IMAGENES/suns.jpg" alt="Sunshower - Taeko Onuki"><h3>Sunshower</h3></div>
+                    <div class="card album-card" onclick="abrirModal('modal-vacation')"><img src="../IMAGENES/alon.jpg" alt="A Long Vacation - Eiichi Ohtaki"><h3>A Long Vacation</h3></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <p><strong>&copy; 2026 Ecos de Tokyo. Todos los derechos reservados.</strong></p>
+        <p>Licencia de uso: todos los derechos reservados sobre el contenido original de este sitio. No se permite su reproducción, distribución o modificación sin autorización previa por escrito.</p>
+        <p>Los nombres, imágenes, portadas y obras de terceros pertenecen a sus respectivos titulares. Su inclusión es únicamente informativa y no implica titularidad ni autorización de reutilización.</p>
+    </footer>
+
+    <!-- VENTANAS EMERGENTES (MODALES) -->
+    <div id="modal-tatsuro" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-tatsuro')">&times;</span>
+            <h3>Tatsuro Yamashita</h3>
+            <p>Rey indiscutible del City Pop. Conocido por sus arreglos magistrales, su voz impecable y una impecable producción musical que definió los años 80.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-tatsuro')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-eiko" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-eiko')">&times;</span>
+            <h3>Eiko Kawashima</h3>
+            <p>Destacada cantautora japonesa con una increíble presencia escénica y letras profundas que marcaron una época.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-eiko')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-miki" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-miki')">&times;</span>
+            <h3>Miki Matsubara</h3>
+            <p>Famosa mundialmente por su icónico hit "Stay With Me". Una de las voces más melódicas y recordadas de la escena pop japonesa.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-miki')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-mariya" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-mariya')">&times;</span>
+            <h3>Mariya Takeuchi</h3>
+            <p>La mente brillante detrás de "Plastic Love". Su estilo pop sofisticado la consolidó como una leyenda viva de la música de Japón.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-mariya')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-taeko" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-taeko')">&times;</span>
+            <h3>Taeko Onuki</h3>
+            <p>Pionera de la música alternativa y el pop vanguardista en Japón, reconocida por sus composiciones acústicas sutiles y elegantes.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-taeko')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-haruomi" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-haruomi')">&times;</span>
+            <h3>Haruomi Hosono</h3>
+            <p>Miembro fundador de Yellow Magic Orchestra (YMO). Una figura vital e innovadora en el desarrollo de la música electrónica mundial.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-haruomi')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-anri" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-anri')">&times;</span>
+            <h3>Anri</h3>
+            <p>Cantante icónica que mezcló a la perfección ritmos veraniegos, funk y pop, transportando a los oyentes directamente a la costa de Japón.</p>
+            <a href="#artistas-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-anri')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-timely" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-timely')">&times;</span>
+            <h3>Timely!!</h3>
+            <p>Álbum definitivo de Anri lanzado en 1983. Contiene éxitos frescos de verano producidos brillantemente por Toshiki Kadomatsu.</p>
+            <a href="#discografias-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-timely')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-ride" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-ride')">&times;</span>
+            <h3>Ride On Time</h3>
+            <p>El álbum de 1980 que catapultó a Tatsuro Yamashita al estrellato total. Su canción homónima es un himno atemporal.</p>
+            <a href="#discografias-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-ride')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-variety" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-variety')">&times;</span>
+            <h3>Variety</h3>
+            <p>Lanzado en 1984 por Mariya Takeuchi. Marcó su regreso triunfal a la música y está compuesto enteramente por canciones escritas por ella misma.</p>
+            <a href="#discografias-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-variety')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-plastic" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-plastic')">&times;</span>
+            <h3>Plastic Love</h3>
+            <p>El fenómeno viral de internet y la canción insignia de todo el movimiento de resurgimiento del City Pop internacional.</p>
+            <a href="#discografias-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-plastic')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-sunshower" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-sunshower')">&times;</span>
+            <h3>Sunshower</h3>
+            <p>Obra maestra de Taeko Onuki de 1977. Una fusión perfecta de jazz, pop y arreglos orquestales impecables dirigidos por Ryuichi Sakamoto.</p>
+            <a href="#discografias-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-sunshower')">Ver más</a>
+        </div>
+    </div>
+
+    <div id="modal-vacation" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal('modal-vacation')">&times;</span>
+            <h3>A Long Vacation</h3>
+            <p>Lanzado en 1981 por Eiichi Ohtaki. Un álbum legendario venerado por su compleja producción influenciada por el "Wall of Sound".</p>
+            <a href="#discografias-seccion" class="btn-ver-mas" onclick="cerrarModal('modal-vacation')">Ver más</a>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal(idModal) {
+            const modal = document.getElementById(idModal);
+            if(modal) modal.style.display = "flex";
+        }
+
+        function cerrarModal(idModal) {
+            const modal = document.getElementById(idModal);
+            if(modal) modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

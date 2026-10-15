@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/diseños_beta.css">
+    <title>Ecos de Tokyo</title>
+    <style>
+        /* ====== Estilos Base Originales ====== */
+        body {
+            display: flex;
+            flex-direction: column;
+            box-sizing: border-box;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0d0f26;
+            color: #ffffff;
+            min-height: 100vh;
+            padding-top: 70px;
+            padding-bottom: 0;
+        }
+
+        html body {
+            padding-bottom: 0;
+        }
+
+        /* BARRA DE NAVEGACIÓN FIJA */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(18, 15, 38, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 10000; 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navbar-menu {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin: 0;
+            padding: 15px 0;
+            gap: 20px;
+        }
+
+        .navbar-item a {
+            color: #b3b3b3;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-item a:hover,
+        .navbar-item a.active {
+            color: #fff;
+        }
+
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1 0 auto;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .fade-in-content {
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+        }
+
+        .fade-in-content > .content-container {
+            flex: 1 0 auto;
+        }
+
+        /* ANIMACIÓN DE TRANSICIÓN CONTENIDO */
+        .fade-in-content {
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ====== NUEVOS ESTILOS PARA LOS MODALES (Aislados de tus carruseles) ====== */
+        .modal-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #16193b; 
+            color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.7);
+            border: 1px solid #25295c;
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .modal-close:hover { color: #fff; }
+        .btn-ver-mas {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 24px;
+            background-color: #ff3366; 
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+        .btn-ver-mas:hover { background-color: #e02454; }
+        .card { cursor: pointer; } 
+
+        .site-footer {
+            margin-top: 0;
+            padding: 24px 20px;
+            background: rgba(10, 12, 30, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            color: #a0a5c1;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .site-footer p + p {
+            margin-top: 6px;
+        }
+
+        .site-footer strong {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .site-footer {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BARRA DE NAVEGACIÓN (SIEMPRE FIJA Y PERSISTENTE) -->
+    <nav class="navbar">
+        <ul class="navbar-menu">
+            <li class="navbar-item"><a class="nav-link active" href="inicio.html">Inicio</a></li>
+            <li class="navbar-item"><a class="nav-link" href="PARTISTAS.html">Artistas</a></li>
+            <li class="navbar-item"><a class="nav-link" href="PEVENTOS.html">Eventos</a></li>
+            <li class="navbar-item"><a class="nav-link" href="PDISCO.html">Discografías</a></li>
+            <li class="navbar-item"><a class="nav-link" href="contactanos.html">Contáctanos</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENEDOR PRINCIPAL DONDE SE CARGAN LAS PÁGINAS EXTERNAS -->
+    <main id="main-content" class="main-container">
+        <!-- El contenido dinámico inicial se inyectará aquí automáticamente -->
+    </main>
+
+    <footer class="site-footer">
+        <p><strong>&copy; 2026 Ecos de Tokyo. Todos los derechos reservados.</strong></p>
+        <p>Licencia de uso: todos los derechos reservados sobre el contenido original de este sitio. No se permite su reproducción, distribución o modificación sin autorización previa por escrito.</p>
+        <p>Los nombres, imágenes, portadas y obras de terceros pertenecen a sus respectivos titulares. Su inclusión es únicamente informativa y no implica titularidad ni autorización de reutilización.</p>
+    </footer>
+
+    <!-- ==================================================== -->
+    <!-- CAPA ÚNICA DINÁMICA DE MODAL (Evita duplicados) -->
+    <!-- ==================================================== -->
+    <div id="dinamic-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="cerrarModal()">&times;</span>
+            <h3 id="modal-titulo">Título</h3>
+            <p id="modal-descripcion">Descripción</p>
+            <a id="modal-boton" class="btn-ver-mas">Ver más</a>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE NAVEGACIÓN ASÍNCRONA POR FETCH E INTERACTIVIDAD GLOBAL -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const contentContainer = document.getElementById("main-content");
+            const links = document.querySelectorAll(".nav-link");
+            let latestPageRequest = 0;
+            let currentTicketPrice = 120;
+            let vinylCart = [];
+
+            function updateVinylCartCount() {
+                const count = contentContainer.querySelector("#cartCount");
+                if (count) count.textContent = String(vinylCart.length);
+            }
+
+            function renderVinylCart() {
+                const itemsContainer = contentContainer.querySelector("#cartItemsContainer");
+                const totalText = contentContainer.querySelector("#cartTotalText");
+                if (!itemsContainer || !totalText) return;
+
+                itemsContainer.replaceChildren();
+                const total = vinylCart.reduce((sum, item) => sum + item.price, 0);
+
+                if (vinylCart.length === 0) {
+                    const emptyMessage = document.createElement("div");
+                    emptyMessage.className = "cart-empty-msg";
+                    emptyMessage.textContent = "Tu carrito está vacío. Agrega vinilos de la colección nocturna.";
+                    itemsContainer.appendChild(emptyMessage);
+                } else {
+                    vinylCart.forEach((item, index) => {
+                        const itemElement = document.createElement("div");
+                        itemElement.className = "cart-item";
+
+                        const info = document.createElement("div");
+                        info.className = "cart-item-info";
+                        const title = document.createElement("span");
+                        title.className = "cart-item-title";
+                        title.textContent = item.title;
+                        const price = document.createElement("span");
+                        price.className = "cart-item-price";
+                        price.textContent = `$${item.price.toFixed(2)} USD`;
+                        info.append(title, price);
+
+                        const removeButton = document.createElement("button");
+                        removeButton.className = "btn-remove-item";
+                        removeButton.type = "button";
+                        removeButton.textContent = "✕ Quitar";
+                        removeButton.addEventListener("click", () => window.removeFromCart(index), { once: true });
+                        itemElement.append(info, removeButton);
+                        itemsContainer.appendChild(itemElement);
+                    });
+                }
+
+                totalText.textContent = `$${total.toFixed(2)} USD`;
+                updateVinylCartCount();
+            }
+
+            window.toggleCart = show => {
+                const overlay = contentContainer.querySelector("#cartOverlay");
+                if (!overlay) return;
+                overlay.classList.toggle("active", show);
+                if (show) renderVinylCart();
+            };
+
+            window.addToCart = (title, price) => {
+                vinylCart.push({ title: String(title), price: Number(price) });
+                renderVinylCart();
+            };
+
+            window.removeFromCart = index => {
+                vinylCart.splice(index, 1);
+                renderVinylCart();
+            };
+
+            window.processCheckout = () => {
+                if (vinylCart.length === 0) {
+                    alert("El carrito está vacío. Agrega al menos un disco antes de continuar.");
+                    return;
+                }
+
+                const name = contentContainer.querySelector("#buyerName")?.value.trim();
+                const email = contentContainer.querySelector("#buyerEmail")?.value.trim();
+                const address = contentContainer.querySelector("#buyerAddress")?.value.trim();
+                if (!name || !email || !address) {
+                    alert("Por favor, completa el nombre, el correo electrónico y la dirección de envío.");
+                    return;
+                }
+
+                const total = vinylCart.reduce((sum, item) => sum + item.price, 0);
+                alert(`Compra de prueba completada, ${name}. Total: $${total.toFixed(2)} USD. Se enviaría una confirmación a ${email}.`);
+                vinylCart = [];
+                contentContainer.querySelector("#buyerName").value = "";
+                contentContainer.querySelector("#buyerEmail").value = "";
+                contentContainer.querySelector("#buyerAddress").value = "";
+                window.toggleCart(false);
+                renderVinylCart();
+            };
+
+            function updateBookingTotal(modal) {
+                const quantity = Number(modal.querySelector("#ticketQty").value);
+                modal.querySelector("#totalPrice").textContent =
+                    `$${currentTicketPrice * quantity} USD`;
+            }
+
+            document.addEventListener("click", event => {
+                if (!(event.target instanceof Element)) return;
+
+                const modal = document.getElementById("bookingModal");
+                if (!modal) return;
+
+                const bookingButton = event.target.closest(".btn-action[data-event-name]");
+                if (bookingButton && contentContainer.contains(bookingButton)) {
+                    modal.querySelector("#modalEventName").textContent = bookingButton.dataset.eventName;
+                    modal.querySelector("#modalEventDate").textContent =
+                        `Fecha del concierto original: ${bookingButton.dataset.eventDate}`;
+                    const eventPrices = {
+                        vip: Number(bookingButton.dataset.vipPrice),
+                        preferred: Number(bookingButton.dataset.preferredPrice),
+                        mezzanine: Number(bookingButton.dataset.mezzaninePrice)
+                    };
+                    modal.querySelectorAll(".zone-option").forEach(option => {
+                        const price = eventPrices[option.dataset.zone];
+                        option.dataset.price = price;
+                        option.querySelector(".zone-price").textContent = `$${price} USD`;
+                        option.classList.toggle("selected", option.dataset.zone === "vip");
+                    });
+                    currentTicketPrice = eventPrices.vip;
+                    modal.querySelector("#ticketQty").value = "1";
+                    updateBookingTotal(modal);
+                    modal.classList.add("active");
+                    return;
+                }
+
+                const zoneOption = event.target.closest(".zone-option[data-price]");
+                if (zoneOption && modal.contains(zoneOption)) {
+                    modal.querySelectorAll(".zone-option").forEach(option => {
+                        option.classList.remove("selected");
+                    });
+                    zoneOption.classList.add("selected");
+                    currentTicketPrice = Number(zoneOption.dataset.price);
+                    updateBookingTotal(modal);
+                    return;
+                }
+
+                if (event.target.closest("[data-booking-close]") || event.target === modal) {
+                    modal.classList.remove("active");
+                    return;
+                }
+
+                if (event.target.closest("[data-booking-confirm]") && modal.contains(event.target)) {
+                    alert("✨ ¡Reserva ficticia completada con éxito! Has viajado en el tiempo para asegurar tu entrada en la base de datos de Ecos de Tokyo.");
+                    modal.classList.remove("active");
+                }
+            });
+
+            document.addEventListener("change", event => {
+                if (!(event.target instanceof HTMLSelectElement) || event.target.id !== "ticketQty") return;
+                const modal = document.getElementById("bookingModal");
+                if (modal && modal.contains(event.target)) {
+                    updateBookingTotal(modal);
+                }
+            });
+
+            const searchableArtists = [
+                { name: "Tatsuro Yamashita", aliases: ["tatsuro"], target: "artist-tatsuro" },
+                { name: "Miki Matsubara", aliases: ["miki"], target: "artist-miki" },
+                { name: "Mariya Takeuchi", aliases: ["mariya"], target: "artist-mariya" },
+                { name: "Taeko Onuki", aliases: ["taeko"], target: "artist-taeko" },
+                { name: "Haruomi Hosono", aliases: ["haruomi"], target: "artist-haruomi" },
+                { name: "Anri", aliases: ["eiko kawashima", "anri eiko kawashima"], target: "artist-anri" }
+            ];
+
+            function normalizeSearch(value) {
+                return value
+                    .trim()
+                    .toLocaleLowerCase()
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "");
+            }
+
+            function setActiveLink(url) {
+                links.forEach(link => {
+                    link.classList.toggle("active", link.getAttribute("href") === url);
+                });
+            }
+
+            // Base de datos de descripciones integrada (Alimenta el modal dinámicamente)
+            const infoData = {
+                "tatsuro yamashita": {
+                    desc: "Rey indiscutible del City Pop. Conocido por sus arreglos magistrales, su voz impecable y una impecable producción musical que definió los años 80.",
+                    link: "PARTISTAS.html"
+                },
+                "eiko kawashima": {
+                    desc: "Destacada cantautora japonesa con una increíble presencia escénica y letras profundas que marcaron una época.",
+                    link: "PARTISTAS.html"
+                },
+                "miki matsubara": {
+                    desc: "Famosa mundialmente por su icónico hit 'Stay With Me'. Una de las voces más melódicas y recordadas de la escena pop japonesa.",
+                    link: "PARTISTAS.html"
+                },
+                "mariya takeuchi": {
+                    desc: "La mente brillante detrás de 'Plastic Love'. Su estilo pop sofisticado la consolidó como una leyenda viva de la música de Japón.",
+                    link: "PARTISTAS.html"
+                },
+                "taeko onuki": {
+                    desc: "Pionera de la música alternativa y el pop vanguardista en Japón, reconocida por sus composiciones acústicas sutiles y elegantes.",
+                    link: "PARTISTAS.html"
+                },
+                "haruomi hosono": {
+                    desc: "Miembro fundador de Yellow Magic Orchestra (YMO). Una figura vital e innovadora en el desarrollo de la música electrónica mundial.",
+                    link: "PARTISTAS.html"
+                },
+                "anri": {
+                    desc: "Cantante icónica que mezcló a la perfección ritmos veraniegos, funk y pop, transportando a los oyentes directamente a la costa de Japón.",
+                    link: "PARTISTAS.html"
+                },
+                "timely!! - anri": {
+                    desc: "Álbum definitivo de Anri lanzado en 1983. Contiene éxitos frescos de verano producidos brillantemente por Toshiki Kadomatsu.",
+                    link: "PDISCO.html"
+                },
+                "ride on time": {
+                    desc: "El álbum de 1980 que catapultó a Tatsuro Yamashita al estrellato total. Su canción homónima es un himno atemporal.",
+                    link: "PDISCO.html"
+                },
+                "variety": {
+                    desc: "Lanzado en 1984 por Mariya Takeuchi. Marcó su regreso triunfal a la música y está compuesto enteramente por canciones escritas por ella misma.",
+                    link: "PDISCO.html"
+                },
+                "plastic love": {
+                    desc: "El fenómeno viral de internet y la canción insignia de todo el movimiento de resurgimiento del City Pop internacional.",
+                    link: "PDISCO.html"
+                },
+                "sunshower": {
+                    desc: "Obra maestra de Taeko Onuki de 1977. Una fusión perfecta de jazz, pop y arreglos orquestales impecables dirigidos por Ryuichi Sakamoto.",
+                    link: "PDISCO.html"
+                },
+                "a long vacation": {
+                    desc: "Lanzado en 1981 por Eiichi Ohtaki. Un álbum legendario venerado por su compleja producción influenciada por el 'Wall of Sound'.",
+                    link: "PDISCO.html"
+                }
+            };
+
+            // FUNCIÓN ENCARGADA DE CARGAR EL HTML EXTERNO E INYECTARLO
+            async function loadPage(url, focusTargetId) {
+                const requestId = ++latestPageRequest;
+
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`No se pudo cargar el archivo: ${url}`);
+                    }
+                    const htmlText = await response.text();
+
+                    if (requestId !== latestPageRequest) return;
+
+                    contentContainer.innerHTML = `<div class="fade-in-content">${htmlText}</div>`;
+                    contentContainer.querySelectorAll(".site-footer").forEach(footer => footer.remove());
+                    renderVinylCart();
+                    if (focusTargetId) {
+                        const focusTarget = document.getElementById(focusTargetId);
+                        if (focusTarget) {
+                            focusTarget.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start"
+                            });
+                        }
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                } catch (error) {
+                    if (requestId !== latestPageRequest) return;
+
+                    console.error("Error al renderizar el contenido:", error);
+                    contentContainer.innerHTML = `
+                        <div style="text-align:center; padding: 40px; color: #ff3366;">
+                            <h3>Error en la carga asíncrona</h3>
+                            <p>Recuerda abrir el proyecto a través de un servidor local (ej. Live Server en VS Code) para permitir fetch.</p>
+                        </div>`;
+                }
+            }
+
+            // 1. Cargar la página inicial automáticamente al abrir el index
+            loadPage('inicio.html');
+
+            // 2. Interceptor de clics de la barra de navegación fija superior
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetUrl = link.getAttribute('href');
+                    
+                    e.preventDefault();
+                    setActiveLink(targetUrl);
+                    loadPage(targetUrl);
+                });
+            });
+
+            document.addEventListener("submit", event => {
+                const form = event.target.closest("#artist-search-form");
+                if (!form) return;
+
+                event.preventDefault();
+                const input = form.querySelector("#artist-search");
+                const status = form.querySelector("#artist-search-status");
+                const query = normalizeSearch(input.value);
+                const matches = searchableArtists.filter(artist =>
+                    [artist.name, ...artist.aliases].some(name =>
+                        normalizeSearch(name).startsWith(query)
+                    )
+                );
+
+                if (matches.length !== 1) {
+                    status.textContent = matches.length
+                        ? "Hay varios resultados. Escribe el nombre completo del artista."
+                        : "No encontré ese artista. Prueba Tatsuro Yamashita, Mariya Takeuchi, Anri o Eiko Kawashima.";
+                    return;
+                }
+
+                const artist = matches[0];
+                setActiveLink("PARTISTAS.html");
+                loadPage("PARTISTAS.html", artist.target);
+            });
+
+            /* ==================================================== */
+            /* DELEGACIÓN DE EVENTOS GLOBAL PARA LAS TARJETAS (CARRUSEL) */
+            /* ==================================================== */
+            document.addEventListener('click', (e) => {
+                const card = e.target.closest('.card');
+                if (!card) return;
+
+                const h3Element = card.querySelector('h3');
+                if (!h3Element) return;
+
+                const nameKey = h3Element.textContent.trim().toLowerCase();
+                const data = infoData[nameKey];
+
+                if (data) {
+                    document.getElementById('modal-titulo').textContent = h3Element.textContent;
+                    document.getElementById('modal-descripcion').textContent = data.desc;
+                    
+                    const btnVerMas = document.getElementById('modal-boton');
+                    btnVerMas.setAttribute('data-target', data.link);
+                    
+                    document.getElementById('dinamic-modal').style.display = 'flex';
+                }
+            });
+
+            // Acción del botón "Ver más" dentro de la ventana dinámica
+            document.getElementById('modal-boton').addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetPage = this.getAttribute('data-target');
+                cerrarModal();
+
+                links.forEach(l => {
+                    if(l.getAttribute('href') === targetPage) {
+                        l.classList.remove('active');
+                        l.classList.add('active');
+                    } else {
+                        l.classList.remove('active');
+                    }
+                });
+
+                loadPage(targetPage);
+            });
+        });
+
+        function cerrarModal() {
+            document.getElementById('dinamic-modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('dinamic-modal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

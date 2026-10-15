@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giras Internacionales Históricas de J-Pop</title>
+    <style>
+        :root {
+            --bg-dark: #0d0f26;
+            --bg-card: #181a26;
+            --border-card: rgba(255, 255, 255, 0.05);
+            --neon-pink: #ff3366;
+            --text-light: #ffffff;
+            --text-muted: #a0a5c1;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            background-attachment: fixed;
+        }
+
+        .container {
+            flex: 1 0 auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            background-color: rgba(13, 15, 38, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 14px;
+            margin: 0 15px;
+            letter-spacing: 1px;
+            transition: color 0.3s;
+        }
+
+        nav a.active, nav a:hover {
+            color: var(--neon-pink);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            max-width: 900px;
+            margin: 0 auto 18px;
+            color: var(--text-light);
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            font-weight: 900;
+            letter-spacing: 3px;
+            line-height: 1.15;
+            text-transform: uppercase;
+            text-shadow: 0 0 28px rgba(255, 51, 102, 0.28);
+        }
+
+        .subtitle {
+            max-width: 720px;
+            margin: 0 auto 34px;
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .history-heading {
+            margin: 0 0 24px;
+            color: var(--neon-pink);
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .gradient-line {
+            width: min(280px, 55vw);
+            height: 5px;
+            background: linear-gradient(90deg, var(--neon-pink), #ff7a00);
+            margin: 0 auto 42px;
+            border-radius: 2px;
+            box-shadow: 0 0 22px rgba(255, 51, 102, 0.35);
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+
+        .event-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            font-style: italic;
+            overflow: hidden;
+        }
+
+        .event-image > img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .badge-tour {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--neon-pink);
+            padding: 5px 10px;
+            font-size: 11px;
+            font-weight: bold;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .image-credit {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            max-width: calc(100% - 115px);
+            padding: 5px 7px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.72);
+            color: #ffffff;
+            font-size: 10px;
+            line-height: 1.3;
+            text-decoration: none;
+        }
+
+        .image-credit:hover {
+            text-decoration: underline;
+        }
+
+        .event-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .event-date {
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .event-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            color: var(--text-light);
+        }
+
+        .event-place {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .event-starting-price {
+            color: var(--neon-pink);
+            font-size: 13px;
+            font-weight: bold;
+            margin: 0 0 18px;
+        }
+
+        .btn-action {
+            margin-top: auto;
+            background: var(--neon-pink);
+            border: none;
+            color: var(--text-light);
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-action:hover {
+            background: #e62254;
+            color: white;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 6, 15, 0.85);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-box {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--neon-pink);
+        }
+
+        .modal-title {
+            font-size: 22px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: var(--text-light);
+        }
+
+        .modal-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .ticket-zone-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .zone-option {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-card);
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .zone-option:hover {
+            border-color: var(--text-muted);
+        }
+
+        .zone-option.selected {
+            border-color: var(--neon-pink);
+            background-color: rgba(255, 51, 102, 0.08);
+        }
+
+        .zone-name {
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .zone-price {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group select {
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-card);
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--neon-pink);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: none;
+        }
+
+        .btn-submit:hover {
+            filter: brightness(1.1);
+        }
+
+        .site-footer {
+            margin-top: 0;
+            padding: 24px 20px;
+            background: rgba(10, 12, 30, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            color: #a0a5c1;
+            text-align: center;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .site-footer p + p {
+            margin-top: 6px;
+        }
+
+        .site-footer strong {
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .site-footer {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Giras Internacionales Históricas</h1>
+        <div class="subtitle">Conciertos y giras internacionales de artistas J-Pop.<br>Precios ilustrativos, variables según evento y zona.</div>
+        <p class="history-heading">Archivo de conciertos</p>
+        <div class="gradient-line"></div>
+
+        <div class="events-grid">
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="../IMAGENES/evento-mariya.jpg" alt="Mariya Takeuchi en una fotografía promocional" loading="lazy">
+                    <a class="image-credit" href="https://commons.wikimedia.org/wiki/File:Mariya_Takeuchi_(cropped).jpg" target="_blank" rel="noopener noreferrer">Foto: Mariya Takeuchi · Wikimedia Commons (CC0)</a>
+                    <div class="badge-tour">Mundial</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">14 Noviembre 2017</div>
+                    <div class="event-title">Mariya Takeuchi: Plastic Love Special Live</div>
+                    <div class="event-place">📍 Los Angeles, The Wiltern</div>
+                    <p class="event-starting-price">Entradas desde $40 USD</p>
+                    <button class="btn-action" data-event-name="Mariya Takeuchi: Plastic Love Live" data-event-date="14 Nov 2017" data-vip-price="120" data-preferred-price="75" data-mezzanine-price="40">Comparar & Reservar</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="../IMAGENES/MI.jpg" alt="Fotografía de Miki Matsubara" loading="lazy">
+                    <div class="badge-tour">Histórico</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">22 Mayo 2019</div>
+                    <div class="event-title">Miki Matsubara: Stay With Me World Tour</div>
+                    <div class="event-place">📍 New York, PlayStation Theater</div>
+                    <p class="event-starting-price">Entradas desde $30 USD</p>
+                    <button class="btn-action" data-event-name="Miki Matsubara: Stay With Me Tour" data-event-date="22 May 2019" data-vip-price="95" data-preferred-price="60" data-mezzanine-price="30">Comparar & Reservar</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="../IMAGENES/onuki.webp" alt="Fotografía de Taeko Onuki" loading="lazy">
+                    <div class="badge-tour">Europa</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">08 Octubre 2022</div>
+                    <div class="event-title">Taeko Onuki: Sunshower Live Session</div>
+                    <div class="event-place">📍 París, Le Bataclan</div>
+                    <p class="event-starting-price">Entradas desde $35 USD</p>
+                    <button class="btn-action" data-event-name="Taeko Onuki: Sunshower Live" data-event-date="08 Oct 2022" data-vip-price="110" data-preferred-price="70" data-mezzanine-price="35">Comparar & Reservar</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="../IMAGENES/evento-tatsuro.jpg" alt="Tatsuro Yamashita en una entrevista para TOKYO FM" loading="lazy">
+                    <a class="image-credit" href="https://commons.wikimedia.org/wiki/File:Tatsuro_Yamashita,_2005_(cropped).jpg" target="_blank" rel="noopener noreferrer">Foto: Kamasami Kong · CC BY-SA 2.0 · recorte</a>
+                    <div class="badge-tour">Asia Tour</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">03 Septiembre 2025</div>
+                    <div class="event-title">Tatsuro Yamashita: Ride On Time Revival</div>
+                    <div class="event-place">📍 Budokan, Tokyo</div>
+                    <p class="event-starting-price">Entradas desde $55 USD</p>
+                    <button class="btn-action" data-event-name="Tatsuro Yamashita: Ride On Time" data-event-date="03 Sept 2025" data-vip-price="150" data-preferred-price="95" data-mezzanine-price="55">Comparar & Reservar</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="../IMAGENES/evento-anri.jpg" alt="Anri actuando en un concierto en Los Ángeles" loading="lazy">
+                    <a class="image-credit" href="https://commons.wikimedia.org/wiki/File:AnriLA22023_(cropped).jpg" target="_blank" rel="noopener noreferrer">Foto: Jackelyn Elston · CC BY-SA 4.0 · recorte</a>
+                    <div class="badge-tour">Los Ángeles</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">15 Junio 2023</div>
+                    <div class="event-title">Anri: Moon in the Sky Concert</div>
+                    <div class="event-place">📍 Los Angeles, California</div>
+                    <p class="event-starting-price">Entradas desde $45 USD</p>
+                    <button class="btn-action" data-event-name="Anri: Moon in the Sky Concert" data-event-date="15 Jun 2023" data-vip-price="135" data-preferred-price="85" data-mezzanine-price="45">Comparar & Reservar</button>
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="../IMAGENES/evento-haruomi.jpg" alt="Haruomi Hosono tocando con Yellow Magic Orchestra en Londres" loading="lazy">
+                    <a class="image-credit" href="https://commons.wikimedia.org/wiki/File:YMOHosono2008(cropped).jpg" target="_blank" rel="noopener noreferrer">Foto: JJ Hall · CC BY 2.0 · recorte</a>
+                    <div class="badge-tour">Londres</div>
+                </div>
+                <div class="event-content">
+                    <div class="event-date">2008</div>
+                    <div class="event-title">Yellow Magic Orchestra: London Live</div>
+                    <div class="event-place">📍 Royal Festival Hall, Londres</div>
+                    <p class="event-starting-price">Entradas desde $35 USD</p>
+                    <button class="btn-action" data-event-name="Yellow Magic Orchestra: London Live" data-event-date="2008" data-vip-price="105" data-preferred-price="65" data-mezzanine-price="35">Comparar & Reservar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-box">
+            <span class="modal-close" data-booking-close>&times;</span>
+            <h3 class="modal-title" id="modalEventName">Nombre del Evento</h3>
+            <div class="modal-subtitle" id="modalEventDate">Fecha</div>
+
+            <p style="text-align: left; font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">
+                1. Compara las zonas disponibles y selecciona una:
+            </p>
+
+            <div class="ticket-zone-selector">
+                <div class="zone-option selected" id="zone1" data-zone="vip" data-price="120">
+                    <span class="zone-name">💎 VIP Front Stage</span>
+                    <span class="zone-price">$120 USD</span>
+                </div>
+                <div class="zone-option" id="zone2" data-zone="preferred" data-price="75">
+                    <span class="zone-name">🍹 Platea General Preferente</span>
+                    <span class="zone-price">$75 USD</span>
+                </div>
+                <div class="zone-option" id="zone3" data-zone="mezzanine" data-price="40">
+                    <span class="zone-name">🌌 Mezzanine (Vista Nocturna)</span>
+                    <span class="zone-price">$40 USD</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ticketQty">2. Cantidad de Entradas</label>
+                <select id="ticketQty">
+                    <option value="1">1 Entrada</option>
+                    <option value="2">2 Entradas</option>
+                    <option value="3">3 Entradas</option>
+                    <option value="4">4 Entradas</option>
+                </select>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding: 0 5px;">
+                <span style="font-weight: bold; font-size: 16px;">Total Estimado:</span>
+                <span id="totalPrice" style="font-size: 22px; font-weight: bold; color: var(--neon-pink);">$120 USD</span>
+            </div>
+
+            <button class="btn-submit" data-booking-confirm>Confirmar Reserva Retro</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p><strong>&copy; 2026 Ecos de Tokyo. Todos los derechos reservados.</strong></p>
+        <p>Licencia de uso: todos los derechos reservados sobre el contenido original de este sitio. No se permite su reproducción, distribución o modificación sin autorización previa por escrito.</p>
+        <p>Los nombres, imágenes, portadas y obras de terceros pertenecen a sus respectivos titulares. Su inclusión es únicamente informativa y no implica titularidad ni autorización de reutilización.</p>
+    </footer>
+
+    <script>
+        (() => {
+            const modal = document.getElementById('bookingModal');
+            let currentPricePerTicket = 120;
+
+            function updateTotal() {
+                const quantity = Number(modal.querySelector('#ticketQty').value);
+                modal.querySelector('#totalPrice').innerText = `$${currentPricePerTicket * quantity} USD`;
+            }
+
+            function closeBooking() {
+                modal.classList.remove('active');
+            }
+
+            document.addEventListener('click', event => {
+                const target = event.target;
+                const bookingButton = target.closest('.btn-action[data-event-name]');
+                if (bookingButton) {
+                    modal.querySelector('#modalEventName').innerText = bookingButton.dataset.eventName;
+                    modal.querySelector('#modalEventDate').innerText =
+                        `Fecha del concierto original: ${bookingButton.dataset.eventDate}`;
+                    modal.querySelectorAll('.zone-option').forEach(option => {
+                        const price = Number(bookingButton.dataset[`${option.dataset.zone}Price`]);
+                        option.dataset.price = price;
+                        option.querySelector('.zone-price').innerText = `$${price} USD`;
+                        option.classList.toggle('selected', option.dataset.zone === 'vip');
+                    });
+                    currentPricePerTicket = Number(bookingButton.dataset.vipPrice);
+                    modal.querySelector('#ticketQty').value = '1';
+                    updateTotal();
+                    modal.classList.add('active');
+                    return;
+                }
+
+                const zoneOption = target.closest('.zone-option[data-price]');
+                if (zoneOption && modal.contains(zoneOption)) {
+                    modal.querySelectorAll('.zone-option').forEach(option => {
+                        option.classList.remove('selected');
+                    });
+                    zoneOption.classList.add('selected');
+                    currentPricePerTicket = Number(zoneOption.dataset.price);
+                    updateTotal();
+                    return;
+                }
+
+                if (target.closest('[data-booking-close]') ||
+                    target === modal) {
+                    closeBooking();
+                    return;
+                }
+
+                if (target.closest('[data-booking-confirm]')) {
+                    alert("✨ ¡Reserva ficticia completada con éxito! Has viajado en el tiempo para asegurar tu entrada en la base de datos de Ecos de Tokyo.");
+                    closeBooking();
+                }
+            });
+
+            document.addEventListener('change', event => {
+                if (event.target.matches('#ticketQty') && modal.contains(event.target)) {
+                    updateTotal();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,367 @@
+<!-- ESTILOS ADICIONALES RECOMENDADOS (Puedes copiarlos en tu etiqueta <style>) -->
+<style>
+    .site-footer {
+        margin-top: 0;
+        padding: 24px 20px;
+        background: rgba(10, 12, 30, 0.92);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        color: #a0a5c1;
+        text-align: center;
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    .site-footer p + p {
+        margin-top: 6px;
+    }
+
+    .site-footer strong {
+        color: #ffffff;
+    }
+
+    @media (max-width: 480px) {
+        .site-footer {
+            padding: 20px 16px;
+        }
+    }
+
+    .artist-row {
+        display: flex;
+        flex-direction: row-reverse; /* Coloca la imagen a la derecha y el texto a la izquierda */
+        align-items: center;
+        justify-content: space-between;
+        scroll-margin-top: 90px;
+        background: #181a26; /* Color oscuro base de tu plantilla */
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 40px;
+        gap: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .artist-info {
+        flex: 1;
+        text-align: left;
+    }
+
+    .artist-media {
+        flex-shrink: 0;
+        width: 380px; /* Tamaño ideal para destacar la imagen a la derecha */
+    }
+
+    .artist-media img {
+        width: 100%;
+        height: 250px;
+        object-fit: contain;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    /* Lista de mejores canciones */
+    .top-tracks {
+        margin: 20px 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .track-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 10px 16px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .track-name {
+        color: #e0e0e0;
+        font-size: 0.9rem;
+    }
+
+    /* Botones de reproducción pequeños para las canciones */
+    .btn-play {
+        background: #ff3366;
+        color: #ffffff;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: bold;
+        transition: background 0.2s;
+    }
+
+    .btn-play:hover {
+        background: #e62254;
+    }
+
+    /* Botón de videoclip principal */
+    .btn-video {
+        display: inline-flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-top: 10px;
+        transition: background 0.2s;
+    }
+
+    .btn-video:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Responsive: En móviles vuelve a ponerse vertical de forma limpia */
+    @media (max-width: 768px) {
+        .artist-row {
+            flex-direction: column-reverse;
+            padding: 20px;
+            gap: 20px;
+        }
+        .artist-media {
+            width: 100%;
+        }
+    }
+</style>
+
+<h1 style="text-align: center; color: #ffffff; margin-top: 40px;">LEYENDAS DE LOS 80s Y 90s</h1>
+<p class="hero-subtitle" style="text-align: center; color: #a0a5c1; margin-bottom: 50px;">
+    Explora la biografía, el impacto y los mayores hitos de los artistas que definieron la era dorada del J-Pop.
+</p>
+
+<!-- CONTENEDOR DE ARTISTAS EN FILAS HORIZONTALES -->
+<div class="artists-container" style="max-width: 1000px; margin: 0 auto; padding: 0 20px;">
+
+    <!-- ARTISTA 1: TATSURO YAMASHITA -->
+    <div class="artist-row" id="artist-tatsuro">
+        <div class="artist-media">
+            <img src="../IMAGENES/TY.jpeg" alt="Tatsuro Yamashita">
+            <a href="https://www.youtube.com/results?search_query=Tatsuro+Yamashita+Ride+on+Time+official+video" target="_blank" rel="noopener noreferrer" class="btn-video">
+                🎬 Ver videoclip oficial
+            </a>
+        </div>
+
+        <div class="artist-info">
+            <h2 style="font-size: 1.8rem; margin-top: 0; margin-bottom: 10px; color: #ffffff;">Tatsuro Yamashita</h2>
+            <p style="font-size: 0.95rem; color: #a0a5c1; line-height: 1.6; margin-bottom: 20px;">
+                Conocido como el "Rey del City Pop", fue una figura central en la sofisticación de la música japonesa de los 80, fusionando influencias del funk, soul y pop americano con arreglos de producción impecables.
+            </p>
+            
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <strong style="color: #ff3366; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 5px;">Mayor Logro:</strong>
+                <p style="font-size: 0.9rem; margin: 0; color: #e0e0e0;">Su clásico navideño "Christmas Eve" ha entrado en las listas de Oricon durante más de 30 años consecutivos, imponiendo un récord Guinness histórico.</p>
+            </div>
+
+            <h3 style="font-size: 1rem; color: #ffffff; margin-bottom: 10px;">🏆 Top 3 Canciones:</h3>
+            <ul class="top-tracks">
+                <li class="track-item">
+                    <span class="track-name">1. Christmas Eve</span>
+                    <a href="https://www.youtube.com/results?search_query=Tatsuro+Yamashita+Christmas+Eve" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">2. Ride On Time</span>
+                    <a href="https://www.youtube.com/results?search_query=Tatsuro+Yamashita+Ride+On+Time" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">3. Sparkle</span>
+                    <a href="https://youtube.com" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p><strong>&copy; 2026 Ecos de Tokyo. Todos los derechos reservados.</strong></p>
+        <p>Licencia de uso: todos los derechos reservados sobre el contenido original de este sitio. No se permite su reproducción, distribución o modificación sin autorización previa por escrito.</p>
+        <p>Los nombres, imágenes, portadas y obras de terceros pertenecen a sus respectivos titulares. Su inclusión es únicamente informativa y no implica titularidad ni autorización de reutilización.</p>
+    </footer>
+
+    <!-- ARTISTA 2: MARIYA TAKEUCHI -->
+    <div class="artist-row" id="artist-mariya">
+        <div class="artist-media">
+            <img src="../IMAGENES/MA.jpg" alt="Mariya Takeuchi">
+            <a href="https://www.youtube.com/results?search_query=Mariya+Takeuchi+Plastic+Love+official+video" target="_blank" rel="noopener noreferrer" class="btn-video">
+                🎬 Ver videoclip oficial
+            </a>
+        </div>
+        <div class="artist-info">
+            <h2 style="font-size: 1.8rem; margin-top: 0; margin-bottom: 10px; color: #ffffff;">Mariya Takeuchi</h2>
+            <p style="font-size: 0.95rem; color: #a0a5c1; line-height: 1.6; margin-bottom: 20px;">
+                Una de las cantautoras más influyentes de Japón. Logró equilibrar su vida familiar con la composición de himnos pop atemporales que capturaron la transición social y el optimismo de la era de la burbuja económica.
+            </p>
+            
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <strong style="color: #ff3366; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 5px;">Mayor Logro:</strong>
+                <p style="font-size: 0.9rem; margin: 0; color: #e0e0e0;">Intérprete de "Plastic Love", canción que décadas después se convirtió en un fenómeno global de internet, acumulando millones de reproducciones en todo el mundo.</p>
+            </div>
+
+            <h3 style="font-size: 1rem; color: #ffffff; margin-bottom: 10px;">🏆 Top 3 Canciones:</h3>
+            <ul class="top-tracks">
+                <li class="track-item">
+                    <span class="track-name">1. Plastic Love</span>
+                    <a href="https://www.youtube.com/results?search_query=Mariya+Takeuchi+Plastic+Love" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">2. Single Again</span>
+                    <a href="https://youtube.com" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">3. Oh No, Oh Yes!</span>
+                    <a href="https://youtube.com" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ARTISTA 3: ANRI -->
+    <div class="artist-row" id="artist-anri">
+        <div class="artist-media">
+            <img src="../IMAGENES/AR.jpg" alt="Anri">
+            <a href="https://www.youtube.com/results?search_query=Anri+Cats+Eye+official+music+video" target="_blank" rel="noopener noreferrer" class="btn-video">
+                🎬 Ver videoclip oficial
+            </a>
+        </div>
+        <div class="artist-info">
+            <h2 style="font-size: 1.8rem; margin-top: 0; margin-bottom: 10px; color: #ffffff;">Anri (Eiko Kawashima)</h2>
+            <p style="font-size: 0.95rem; color: #a0a5c1; line-height: 1.6; margin-bottom: 20px;">
+                Pionera en traer la estética veraniega, de resorts y playas al pop japonés. Su música consolidó el sonido de sintetizadores y líneas de bajo alegres que definieron los veranos de los años 80.
+            </p>
+            
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <strong style="color: #ff3366; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 5px;">Mayor Logro:</strong>
+                <p style="font-size: 0.9rem; margin: 0; color: #e0e0e0;">Su aclamado álbum "Timely!!" (1983) alcanzó el puesto número 1 en las listas semanales de Oricon, impulsado por el masivo éxito del sencillo "Cat's Eye".</p>
+            </div>
+
+            <h3 style="font-size: 1rem; color: #ffffff; margin-bottom: 10px;">🏆 Top 3 Canciones:</h3>
+            <ul class="top-tracks">
+                <li class="track-item">
+                    <span class="track-name">1. Cat's Eye</span>
+                    <a href="https://www.youtube.com/results?search_query=Anri+Cats+Eye" target="_blank" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">2. Remember Summer Days</span>
+                    <a href="https://www.youtube.com/results?search_query=Anri+Remember+Summer+Days" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">3. Windy Summer</span>
+                    <a href="https://www.youtube.com/results?search_query=Anri+Windy+Summer" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ARTISTA 4: MIKI MATSUBARA -->
+    <div class="artist-row" id="artist-miki">
+        <div class="artist-media">
+            <img src="../IMAGENES/MI.jpg" alt="Miki Matsubara">
+            <a href="https://www.youtube.com/results?search_query=Miki+Matsubara+Stay+With+Me+official" target="_blank" rel="noopener noreferrer" class="btn-video">
+                🎬 Ver videoclip oficial
+            </a>
+        </div>
+        <div class="artist-info">
+            <h2 style="font-size: 1.8rem; margin-top: 0; margin-bottom: 10px; color: #ffffff;">Miki Matsubara</h2>
+            <p style="font-size: 0.95rem; color: #a0a5c1; line-height: 1.6; margin-bottom: 20px;">
+                Cantante japonesa reconocida por su voz expresiva y su mezcla de pop, jazz y funk, que dio un sonido distintivo al City Pop.
+            </p>
+
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <strong style="color: #ff3366; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 5px;">Mayor Logro:</strong>
+                <p style="font-size: 0.9rem; margin: 0; color: #e0e0e0;">Su sencillo debut "Mayonaka no Door / Stay With Me" se convirtió, años después de su lanzamiento, en un éxito internacional y en una de las canciones más reconocidas del City Pop.</p>
+            </div>
+
+            <h3 style="font-size: 1rem; color: #ffffff; margin-bottom: 10px;">🏆 Top 3 Canciones:</h3>
+            <ul class="top-tracks">
+                <li class="track-item">
+                    <span class="track-name">1. Mayonaka no Door / Stay With Me</span>
+                    <a href="https://www.youtube.com/results?search_query=Miki+Matsubara+Stay+With+Me" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">2. Neat na Gogo Sanji</span>
+                    <a href="https://www.youtube.com/results?search_query=Miki+Matsubara+Neat+na+Gogo+Sanji" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">3. Aitsu no Brown Shoes</span>
+                    <a href="https://www.youtube.com/results?search_query=Miki+Matsubara+Aitsu+no+Brown+Shoes" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ARTISTA 5: TAEKO ONUKI -->
+    <div class="artist-row" id="artist-taeko">
+        <div class="artist-media">
+            <img src="../IMAGENES/onuki.webp" alt="Taeko Onuki">
+            <a href="https://www.youtube.com/results?search_query=Taeko+Onuki+4%3A00+A.M.+official" target="_blank" rel="noopener noreferrer" class="btn-video">
+                🎬 Ver videoclip oficial
+            </a>
+        </div>
+        <div class="artist-info">
+            <h2 style="font-size: 1.8rem; margin-top: 0; margin-bottom: 10px; color: #ffffff;">Taeko Onuki</h2>
+            <p style="font-size: 0.95rem; color: #a0a5c1; line-height: 1.6; margin-bottom: 20px;">
+                Cantautora pionera de la música alternativa japonesa, conocida por sus arreglos delicados y su fusión de pop, jazz y sonidos acústicos.
+            </p>
+
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <strong style="color: #ff3366; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 5px;">Mayor Logro:</strong>
+                <p style="font-size: 0.9rem; margin: 0; color: #e0e0e0;">Su álbum "Sunshower" es considerado una obra destacada del City Pop por su combinación de jazz, pop y arreglos sofisticados.</p>
+            </div>
+
+            <h3 style="font-size: 1rem; color: #ffffff; margin-bottom: 10px;">🏆 Top 3 Canciones:</h3>
+            <ul class="top-tracks">
+                <li class="track-item">
+                    <span class="track-name">1. 4:00 A.M.</span>
+                    <a href="https://www.youtube.com/results?search_query=Taeko+Onuki+4%3A00+A.M." target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">2. Tokai</span>
+                    <a href="https://www.youtube.com/results?search_query=Taeko+Onuki+Tokai" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">3. Sunshower</span>
+                    <a href="https://www.youtube.com/results?search_query=Taeko+Onuki+Sunshower" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ARTISTA 6: HARUOMI HOSONO -->
+    <div class="artist-row" id="artist-haruomi">
+        <div class="artist-media">
+            <img src="../IMAGENES/hosono.jpg" alt="Haruomi Hosono">
+            <a href="https://www.youtube.com/results?search_query=Haruomi+Hosono+official+music" target="_blank" rel="noopener noreferrer" class="btn-video">
+                🎬 Ver música de Haruomi Hosono
+            </a>
+        </div>
+        <div class="artist-info">
+            <h2 style="font-size: 1.8rem; margin-top: 0; margin-bottom: 10px; color: #ffffff;">Haruomi Hosono</h2>
+            <p style="font-size: 0.95rem; color: #a0a5c1; line-height: 1.6; margin-bottom: 20px;">
+                Músico, productor y compositor japonés que exploró géneros como el pop, la música electrónica y los sonidos tropicales.
+            </p>
+
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                <strong style="color: #ff3366; font-size: 0.85rem; text-transform: uppercase; display: block; margin-bottom: 5px;">Mayor Logro:</strong>
+                <p style="font-size: 0.9rem; margin: 0; color: #e0e0e0;">Fue miembro fundador de Yellow Magic Orchestra (YMO), grupo influyente en el desarrollo de la música electrónica y el pop japonés.</p>
+            </div>
+
+            <h3 style="font-size: 1rem; color: #ffffff; margin-bottom: 10px;">🏆 Top 3 Canciones:</h3>
+            <ul class="top-tracks">
+                <li class="track-item">
+                    <span class="track-name">1. Sports Men</span>
+                    <a href="https://www.youtube.com/results?search_query=Haruomi+Hosono+Sports+Men" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">2. Tropical Dandy</span>
+                    <a href="https://www.youtube.com/results?search_query=Haruomi+Hosono+Tropical+Dandy" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+                <li class="track-item">
+                    <span class="track-name">3. Ai Ai Gasa</span>
+                    <a href="https://www.youtube.com/results?search_query=Haruomi+Hosono+Ai+Ai+Gasa" target="_blank" rel="noopener noreferrer" class="btn-play">▶ Reproducir</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

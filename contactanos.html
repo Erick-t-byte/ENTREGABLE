@@ -1,0 +1,131 @@
+<style>
+    .contact-page {
+        max-width: 760px;
+        margin: 40px auto;
+        padding: 32px;
+        background: #181a26;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        color: #ffffff;
+    }
+
+    .contact-page h1 {
+        margin: 0 0 12px;
+        text-align: center;
+    }
+
+    .contact-page > p {
+        margin: 0 0 28px;
+        color: #a0a5c1;
+        line-height: 1.6;
+        text-align: center;
+    }
+
+    .contact-form {
+        display: grid;
+        gap: 16px;
+    }
+
+    .contact-form label {
+        display: grid;
+        gap: 7px;
+        color: #a0a5c1;
+        font-size: 0.9rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        background: #0d0f26;
+        color: #ffffff;
+        font: inherit;
+    }
+
+    .contact-form textarea {
+        min-height: 140px;
+        resize: vertical;
+    }
+
+    .contact-notice {
+        margin: 0;
+        color: #a0a5c1;
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+
+    .contact-submit {
+        padding: 12px 16px;
+        border: 0;
+        border-radius: 8px;
+        background: #ff3366;
+        color: #ffffff;
+        font: inherit;
+        font-weight: bold;
+        cursor: not-allowed;
+        opacity: 0.75;
+    }
+
+    .site-footer {
+        margin-top: 0;
+        padding: 24px 20px;
+        background: rgba(10, 12, 30, 0.92);
+        border-top: 1px solid rgba(255, 255, 255, 0.12);
+        color: #a0a5c1;
+        text-align: center;
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    .site-footer p + p {
+        margin-top: 6px;
+    }
+
+    .site-footer strong {
+        color: #ffffff;
+    }
+
+    @media (max-width: 480px) {
+        .site-footer {
+            padding: 20px 16px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .contact-page {
+            margin: 20px auto;
+            padding: 22px;
+        }
+    }
+</style>
+
+<section class="contact-page">
+    <h1>Contáctanos</h1>
+    <p>¿Tienes preguntas o sugerencias sobre artistas, eventos o discografías? Déjanos un mensaje.</p>
+
+    <form class="contact-form">
+        <label for="contact-name">
+            Nombre
+            <input id="contact-name" name="name" type="text" autocomplete="name" required>
+        </label>
+        <label for="contact-email">
+            Correo electrónico
+            <input id="contact-email" name="email" type="email" autocomplete="email" required>
+        </label>
+        <label for="contact-message">
+            Mensaje
+            <textarea id="contact-message" name="message" required></textarea>
+        </label>
+        <p class="contact-notice">El formulario es una vista previa y todavía no está conectado para enviar mensajes.</p>
+        <button class="contact-submit" type="button" disabled>Envío próximamente</button>
+    </form>
+</section>
+
+<footer class="site-footer">
+    <p><strong>&copy; 2026 Ecos de Tokyo. Todos los derechos reservados.</strong></p>
+    <p>Licencia de uso: todos los derechos reservados sobre el contenido original de este sitio. No se permite su reproducción, distribución o modificación sin autorización previa por escrito.</p>
+    <p>Los nombres, imágenes, portadas y obras de terceros pertenecen a sus respectivos titulares. Su inclusión es únicamente informativa y no implica titularidad ni autorización de reutilización.</p>
+</footer>
